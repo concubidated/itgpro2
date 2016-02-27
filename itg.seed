@@ -27,7 +27,7 @@ d-i partman-auto/expert_recipe string                         \
                       use_filesystem{ } filesystem{ xfs }     \
                       mountpoint{ /boot }                     \
               .                                               \
-              4000 4000 4000 xfs                              \
+              5000 5000 5000 xfs                              \
                       $primary{ } method{ format } format{ }  \
                       use_filesystem{ } filesystem{ xfs }     \
                       mountpoint{ / }                         \
@@ -37,7 +37,7 @@ d-i partman-auto/expert_recipe string                         \
                       use_filesystem{ } filesystem{ xfs }     \
                       mountpoint{ /stats }                    \
              .                                                \
-	     4000 4000 4000 xfs                             \
+	     5000 5000 5000 xfs                             \
                       method{ format } format{ }              \
                       use_filesystem{ } filesystem{ xfs }     \
                       mountpoint{ /itgdata }                  \
@@ -85,8 +85,10 @@ d-i finish-install/reboot_in_progress note
 #Copy the installer script to 
 d-i preseed/late_command string cp -a /cdrom/pool/itg/itg-installer.sh /target/home/itg/ ; \
 mkdir -p /target/home/itg/drivers ; \
-cp -a /cdrom/pool/itg/NVIDIA* /target/home/itg/drivers/ ;
-
+cp -a /cdrom/pool/itg/NVIDIA* /target/home/itg/drivers/ ; \
+mkdir -p /target/home/itg/files ; \
+cp -a /cdrom/pool/itg/itgdata.tar /target/home/itg/files/ ; \
+cp -a /cdrom/pool/itg/stats.tar /target/home/itg/files/ ;
 
 
 d-i mirror/suite string trusty

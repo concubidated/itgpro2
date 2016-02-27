@@ -9,7 +9,7 @@ fi
 
 #color variables
 GREEN='\e[32m\e[1m';
-RED='\e[31\e[1m';
+RED='\e[31m\e[1m';
 NC='\033[0m\e[21m';
 
 #functions
@@ -31,7 +31,7 @@ nvidia_choice(){
 	  331_49 ) nvidia_331_49 ;;
 	  340_65 ) nvidia_340_65 ;;
 	  340_96 ) nvidia_340_96 ;;
-	  *   ) echo "Invalid Choice"; nvidia_choice ;;
+	  *   ) echo "${RED}Invalid Choice${NC}"; nvidia_choice ;;
 	esac
 }
 
@@ -51,26 +51,47 @@ nvidia_340_96(){
 }
 
 stats_setup(){
-	echo "Downloading and extracting data for /stats";
-	wget -qO- http://concubidated.com/itgfiles/stats.tar | tar xvz -C /stats/
+	if [ -f "files/stats.tar" ]
+	then
+	        echo "Extracting data for /stats";
+		tar zxf files/stats.tar -C /stats/
+	else
+	        echo "Downloading and extracting data for /stats";
+		wget -qO- http://concubidated.com/itgfiles/stats.tar | tar xvz -C /stats/
+	fi
 }
 
 itgdata_setup(){
-	echo "Downloading and extracting data for /itgdata"
-	wget -qO- http://concubidated.com/itgfiles/itgdata.tar | tar xvz -C /itgdata/
+	if [ -f "files/itgdata.tar" ]
+	then
+		echo "Extracting data for /itgdata"
+		tar zxf files/itgdata.tar -C /itgdata/
+	else
+		echo "Downloading and extracting data for /itgdata"
+		wget -qO- http://concubidated.com/itgfiles/itgdata.tar | tar xvz -C /itgdata/
+	fi
 }
 
 upstart_setup(){
-	echo "start on runlevel [2345]
+	if [ ! -f /etc/init/itg.conf ]
+	then
+		cat <<EOF >> /etc/init/itg.conf
+start on runlevel [2345]
 exec /itgdata/start-game.sh
 respawn
 # Give up if restart occurs 10 times in 90 seconds.
-respawn limit 10 90" | tee /etc/init/itg.conf
+respawn limit 10 90
+EOF
+		echo -e "Upstart Script installed.\n" ;
+	fi
+
 }
 
 
 flashdrive_setup(){
+
 	#flash drive entires into fstab for working USB
+	echo "Making Directories for flash drive mount points..."
 	mkdir -p /media/itg/sdb1
 	mkdir -p /media/itg/sdc1
 	mkdir -p /media/itg/sdd1
@@ -79,12 +100,14 @@ flashdrive_setup(){
 	#check fstab before adding entries
 	if [[ ! $(cat /etc/fstab | grep "/media/itg") ]]
 	then
+		echo "Updating /etc/fstab...";
 
-	echo "/dev/sdb1 /media/itg/sdb1 vfat    noauto  0       0
-	/dev/sdc1       /media/itg/sdc1 vfat    noauto  0       0
-	/dev/sdd1       /media/itg/sdd1 vfat    noauto  0       0
-	/dev/sde1       /media/itg/sde1     vfat    noauto  0       0" | \
-	sudo tee -a /etc/fstab;
+		cat <<EOF >> /etc/fstab
+/dev/sdb1 /media/itg/sdb1 vfat    noauto  0       0
+/dev/sdc1       /media/itg/sdc1 vfat    noauto  0       0
+/dev/sdd1       /media/itg/sdd1 vfat    noauto  0       0
+/dev/sde1       /media/itg/sde1     vfat    noauto  0       0
+EOF
 
 	fi
 }
@@ -109,11 +132,32 @@ internet_check(){
 install_packages(){
 	#Install required packages
 	apt-get update
-	apt-get install build-essential libc6-i386 libx11-6:i386 libglu1-mesa:i386 \
+	apt-get install -y build-essential libc6-i386 libx11-6:i386 libglu1-mesa:i386 \
 	libpng12-0:i386 libjpeg62:i386 libusb-0.1-4:i386 libxrandr2:i386 libstdc++5:i386 \
 	alsa xinit x11-xserver-utils libXtst6:i386 libasound2:i386 pmount zip unzip \
 	libusb-0.1-4:i386 xinit;
 }
+
+cab_config(){
+
+	#Is machine a upgrade or dedicab?
+	read -p "Is this cabinet an Upgrade Cab? (y/n)? " choice
+	case "$choice" in
+	  [yY] ) touch /itgdata/K; rm -f /itgdata/C ;;
+	  [nN] ) echo "\n" ;;
+	  *    ) echo "-e ${RED}Invalid Choice${NC}\n"; cab_config ;;
+	esac
+
+	#What theme to run?
+	read -p "Do you want to run the Simply Love theme? (y/n) " choice
+	case "$choice" in
+          [yY] ) echo -e "${GREEN}Simply Love${NC} theme installed\n"; ;;
+          [nN] ) sed -i 's/^Theme/#Theme/' /stats/patch/Static-default.ini ; echo -e "${GREEN}Stock ITG2${NC} theme will be used.\n" ;;
+          *    ) echo "${RED}Invalid Choice${NC}"; echo -e "Simply Love will be used.\n" ;;
+        esac
+
+}
+
 
 #Start of the Installer Script
 
@@ -127,3 +171,4 @@ stats_setup
 itgdata_setup
 flashdrive_setup
 upstart_setup
+cab_config
