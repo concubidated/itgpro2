@@ -36,3 +36,9 @@ Note: If you are not going to be using the **itgpro2.iso** to install your syste
 
 ##TODO
 * Add script for adding more songs packs
+
+##Where to Get
+
+[ITGPro2.iso Download] (http://concubidated.com/stepmania/index.php?dir=In%20the%20Groove/ITGPRO/&file=ITGPro2.iso)
+
+Create a bootable USB stick using this image to install ITGPro2. 
