@@ -48,7 +48,7 @@ The iso has had a couple issues where it would not work correctly when installin
 
 1. Download [Ubuntu 14.04.1] (http://old-releases.ubuntu.com/releases/14.04.2/ubuntu-14.04.1-server-amd64.iso)
 2. Boot the installer, and select "Install Ubuntu Server"
-3. Enter through the options, set the hostname to *itg*, username to *itg*, and password to *itg*, use weak password and do NOT encrpyt the home directory.
+3. Enter through the options, set the hostname to *itg*, username to *itg*, and password to *itg*, use weak password and do NOT encrypt the home directory.
 4. Partiioning, select *Manual*, Select *sda* drive, create empy partition table. Then create the following partitions.
   * 500MB, Primary, XFS, Mount = /boot, bootable flag = yes, Done
   * 5GB, Primary, XFS, Mount = /, Done
@@ -56,7 +56,7 @@ The iso has had a couple issues where it would not work correctly when installin
   * Free Space, Logical, XFS, Mount = /itgdata, done
   * Finish Paritioning and write changes to disk
   * No Swap
-  * ![What it should look like] (http://i.imgur.com/p2VkHh6.png)
+![What it should look like] (http://i.imgur.com/p2VkHh6.png)
 4. System will install, when it gets to the Software Selection Screen, use spacebar to select OpenSSH server
 5. Install GRUB
 6. After the install is finished, the system should reboot and you will get a login promt. Login with `itg`, and password `itg`.
