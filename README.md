@@ -66,4 +66,21 @@ The iso has had a couple issues where it would not work correctly when installin
   * When asked what NVIDIA driver to install, start with 331_49 if using a 9000 series card or older.
 10. If everything went well, itg can be started with `sudo start itg`
 
+##Overscan issues
+
+I have noticed a few cases when using S-VIDEO to output to a TV rather then VGA to the JAMMA output that the display is not correct and overscan issues exists. This means the screen is larger then the display. This can be resolved by modifying the xorg configuration ITG uses when booting. The file to modify is /stats/patch/XF86Config-cab
+
+In the `Monitor` section add the following Modeline
+`Modeline "800x600_60.00"   38.25  800 832 912 1024  600 603 607 624 -hsync +vsync`
+
+In the `Screens` section add the following Options
+
+```	
+Option "ConnectedMonitor" "TV-0"
+Option         "metamodes"     "TV-0: 800x600+0+0 { ViewPortIn=640x480, ViewPortOut=640x440+30+20}"
+```
+
+What this is doing is setting a virtual resoluton of 800x600 on a display that only outputs 640x480. This allows you to maniipulate the width, height and origin of the viewport manually.
+In this example ViewPortOut was set to 640x440+30+20. This means 640 pixels wide, by 440 pixels tall. The +30 indicates 30 pixels from the left origin, and +20 indicates 20 pixels from the top origin. You may need to manually adjust this depending on your display and graphics card. 
+
 
