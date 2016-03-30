@@ -7,6 +7,9 @@ In The Groove 2 cabinets are usually in terrible shape when it comes to their ha
 First thing required is going to be a new computer for the cabinet and a newer *NVIDIA* graphics card. So far I have tested this on the following cards:
 * GeForce GT 630
 * GeForce 9400 GT
+* GeForce 7300 GS
+* GeForce 8500 GS
+
 
 The following motherboards:
 * ASRock B85M-ITX Mini ITX
@@ -39,6 +42,45 @@ Note: If you are not going to be using the **itgpro2.iso** to install your syste
 
 ##Where to Get
 
-[ITGPro2.iso Download] (http://concubidated.com/stepmania/index.php?dir=In%20the%20Groove/ITGPRO/&file=ITGPro2.iso)
+The iso has had a couple issues where it would not work correctly when installing via USB. (Only was working off optical media). Will create a new image soon enough.
 
-Create a bootable USB stick using this image to install ITGPro2. 
+##Installing without the ISO
+
+1. Download [Ubuntu 14.04.1] (http://old-releases.ubuntu.com/releases/14.04.2/ubuntu-14.04.1-server-amd64.iso)
+2. Boot the installer, and select "Install Ubuntu Server"
+3. Enter through the options, set the hostname to *itg*, username to *itg*, and password to *itg*, use weak password and do NOT encrypt the home directory.
+4. Partiioning, select *Manual*, Select *sda* drive, create empy partition table. Then create the following partitions.
+  * 500MB, Primary, XFS, Mount = /boot, bootable flag = yes, Done
+  * 5GB, Primary, XFS, Mount = /, Done
+  * 1GB, Primary, XFS, Mount = /stats, Done
+  * Free Space, Logical, XFS, Mount = /itgdata, done
+  * Finish Paritioning and write changes to disk
+  * No Swap
+![What it should look like] (http://i.imgur.com/p2VkHh6.png)
+4. System will install, when it gets to the Software Selection Screen, use spacebar to select OpenSSH server
+5. Install GRUB
+6. After the install is finished, the system should reboot and you will get a login promt. Login with `itg`, and password `itg`.
+7. Install GIT `sudo apt-get install git`
+8. Clone the repo, `git clone https://github.com/concubidated/itgpro2` and change directory to itgpro2, `cd itgpro2`
+9. Run the installer script `sudo ./itg-installer.sh`
+  * When asked what NVIDIA driver to install, start with 331_49 if using a 9000 series card or older.
+10. If everything went well, itg can be started with `sudo start itg`
+
+##Overscan issues
+
+I have noticed a few cases when using S-VIDEO to output to a TV rather then VGA to the JAMMA output that the display is not correct and overscan issues exists. This means the screen is larger then the display. This can be resolved by modifying the xorg configuration ITG uses when booting. The file to modify is /stats/patch/XF86Config-cab
+
+In the `Monitor` section add the following Modeline
+`Modeline "800x600_60.00"   38.25  800 832 912 1024  600 603 607 624 -hsync +vsync`
+
+In the `Screens` section add the following Options
+
+```	
+Option "ConnectedMonitor" "TV-0"
+Option         "metamodes"     "TV-0: 800x600+0+0 { ViewPortIn=640x480, ViewPortOut=640x440+30+20}"
+```
+
+What this is doing is setting a virtual resoluton of 800x600 on a display that only outputs 640x480. This allows you to manipulate the width, height and origin of the viewport manually.
+In this example ViewPortOut was set to 640x440+30+20. This means 640 pixels wide, by 440 pixels tall. The +30 indicates 30 pixels from the left origin, and +20 indicates 20 pixels from the top origin. You may need to manually adjust this depending on your display and graphics card. 
+
+

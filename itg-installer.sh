@@ -36,18 +36,40 @@ nvidia_choice(){
 }
 
 nvidia_331_49(){
-	echo "Installing NVIDIA-Linux-x86_64-331.49.run";
-	/home/itg/drivers/NVIDIA-Linux-x86_64-331.49.run -a -X -q
+	if [ -f "/home/itg/drivers/NVIDIA-Linux-x86_64-331.49.run" ]
+	then
+		echo "Installing NVIDIA-Linux-x86_64-331.49.run";
+		/home/itg/drivers/NVIDIA-Linux-x86_64-331.49.run -a -X -q
+	else
+		echo "Downloading NVIDIA Driver";
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/331.49/NVIDIA-Linux-x86_64-331.49.run" -P /home/itg/;	
+                /home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
+	fi
 }
 
 nvidia_340_65(){
-	echo "Installing NVIDIA-Linux-x86_64-340.65.run";
-	/home/itg/drivers/NVIDIA-Linux-x86_64-340.65.run -a -X -q
+
+        if [ -f "/home/itg/drivers/NVIDIA-Linux-x86_64-340.65.run" ]
+        then
+		echo "Installing NVIDIA-Linux-x86_64-340.65.run";
+		/home/itg/drivers/NVIDIA-Linux-x86_64-340.65.run -a -X -q
+	else
+		echo "Downloading NVIDIA Driver then intalling";
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.65/NVIDIA-Linux-x86_64-340.65.run" -P /home/itg/;
+		/home/itg/NVIDIA-Linux-x86_64-340.65.run -a -X -q
+	fi
 }
 
 nvidia_340_96(){
-	echo "Installing NVIDIA-Linux-x86_64-340.96.run";
-	/home/itg/drivers/NVIDIA-Linux-x86_64-340.96.run -a -X -q
+	if [ -f "/home/itg/drivers/NVIDIA-Linux-x86_64-340.96.run" ]
+	then
+		echo "Installing NVIDIA-Linux-x86_64-340.96.run";
+		/home/itg/drivers/NVIDIA-Linux-x86_64-340.96.run -a -X -q
+	else
+		echo "Downloading NVIDIA Driver then installing";
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.96/NVIDIA-Linux-x86_64-340.96.run" -P /home/itg/;
+		/home/itg/NVIDIA-Linux-x86_64-340.96.run -a -X -q
+	fi
 }
 
 stats_setup(){
