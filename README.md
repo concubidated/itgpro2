@@ -80,7 +80,7 @@ Option "ConnectedMonitor" "TV-0"
 Option         "metamodes"     "TV-0: 800x600+0+0 { ViewPortIn=640x480, ViewPortOut=640x440+30+20}"
 ```
 
-What this is doing is setting a virtual resoluton of 800x600 on a display that only outputs 640x480. This allows you to maniipulate the width, height and origin of the viewport manually.
+What this is doing is setting a virtual resoluton of 800x600 on a display that only outputs 640x480. This allows you to manipulate the width, height and origin of the viewport manually.
 In this example ViewPortOut was set to 640x440+30+20. This means 640 pixels wide, by 440 pixels tall. The +30 indicates 30 pixels from the left origin, and +20 indicates 20 pixels from the top origin. You may need to manually adjust this depending on your display and graphics card. 
 
 
