@@ -71,6 +71,7 @@ The iso has had a couple issues where it would not work correctly when installin
 I have noticed a few cases when using S-VIDEO to output to a TV rather then VGA to the JAMMA output that the display is not correct and overscan issues exists. This means the screen is larger then the display. This can be resolved by modifying the xorg configuration ITG uses when booting. The file to modify is /stats/patch/XF86Config-cab
 
 In the `Monitor` section add the following Modeline
+
 `Modeline "800x600_60.00"   38.25  800 832 912 1024  600 603 607 624 -hsync +vsync`
 
 In the `Screens` section add the following Options
