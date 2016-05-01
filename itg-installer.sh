@@ -43,8 +43,9 @@ nvidia_173_14(){
 		/home/itg/drivers/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
 	else
 		echo "Downloading NVIDIA Driver";
-		wget "http://us.download.nvidia.com/XFree86/Linux-x86/173.14.39/NVIDIA-Linux-x86-173.14.39-pkg1.run" -P /home/itg/;	
-				chmod +x /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86/173.14.39/NVIDIA-Linux-x86-173.14.39-pkg1.run" -P /home/itg/;
+		chmod 777 /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
+		chmod +x /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
                 /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
 	fi
 }
@@ -58,7 +59,7 @@ nvidia_331_49(){
 		echo "Downloading NVIDIA Driver";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/331.49/NVIDIA-Linux-x86_64-331.49.run" -P /home/itg/;	
                 chmod +x /home/itg/NVIDIA-Linux-x86_64-331.49.run
-				/home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
+		/home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
 	fi
 }
 
