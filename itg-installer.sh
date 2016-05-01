@@ -25,14 +25,28 @@ kernel_module(){
 }
 
 nvidia_choice(){
-	read -p "Which Nvidia driver would you like to install (331_49/340_65/340_96)? " choice
+	read -p "Which Nvidia driver would you like to install (173_14/331_49/340_65/340_96)? " choice
 
 	case "$choice" in
+	  173_14 ) nvidia_173_14 ;;	
 	  331_49 ) nvidia_331_49 ;;
 	  340_65 ) nvidia_340_65 ;;
 	  340_96 ) nvidia_340_96 ;;
 	  *   ) echo "${RED}Invalid Choice${NC}"; nvidia_choice ;;
 	esac
+}
+
+nvidia_173_14(){
+	if [ -f "/home/itg/drivers/NVIDIA-Linux-x86-173.14.39-pkg1.run" ]
+	then
+		echo "Installing NVIDIA-Linux-x86-173.14.39-pkg1.run";
+		/home/itg/drivers/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
+	else
+		echo "Downloading NVIDIA Driver";
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86/173.14.39/NVIDIA-Linux-x86-173.14.39-pkg1.run" -P /home/itg/;	
+				chmod +x /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
+                /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
+	fi
 }
 
 nvidia_331_49(){
@@ -43,7 +57,8 @@ nvidia_331_49(){
 	else
 		echo "Downloading NVIDIA Driver";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/331.49/NVIDIA-Linux-x86_64-331.49.run" -P /home/itg/;	
-                /home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
+                chmod +x /home/itg/NVIDIA-Linux-x86_64-331.49.run
+				/home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
 	fi
 }
 
@@ -56,6 +71,7 @@ nvidia_340_65(){
 	else
 		echo "Downloading NVIDIA Driver then intalling";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.65/NVIDIA-Linux-x86_64-340.65.run" -P /home/itg/;
+		chmod +x /home/itg/NVIDIA-Linux-x86_64-340.65.run
 		/home/itg/NVIDIA-Linux-x86_64-340.65.run -a -X -q
 	fi
 }
@@ -68,6 +84,7 @@ nvidia_340_96(){
 	else
 		echo "Downloading NVIDIA Driver then installing";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.96/NVIDIA-Linux-x86_64-340.96.run" -P /home/itg/;
+		chmod +x /home/itg/NVIDIA-Linux-x86_64-340.96.run
 		/home/itg/NVIDIA-Linux-x86_64-340.96.run -a -X -q
 	fi
 }
@@ -154,10 +171,19 @@ internet_check(){
 install_packages(){
 	#Install required packages
 	apt-get update
-	apt-get install -y build-essential libc6-i386 libx11-6:i386 libglu1-mesa:i386 \
-	libpng12-0:i386 libjpeg62:i386 libusb-0.1-4:i386 libxrandr2:i386 libstdc++5:i386 \
-	alsa xinit x11-xserver-utils libXtst6:i386 libasound2:i386 pmount zip unzip \
-	libusb-0.1-4:i386 xinit;
+	if [ `getconf LONG_BIT` = "64" ]
+	then
+		apt-get install -y build-essential libc6-i386 libx11-6:i386 libglu1-mesa:i386 \
+		libpng12-0:i386 libjpeg62:i386 libusb-0.1-4:i386 libxrandr2:i386 libstdc++5:i386 \
+		alsa xinit x11-xserver-utils libXtst6:i386 libasound2:i386 pmount zip unzip \
+		libusb-0.1-4:i386 xinit;
+	else
+		apt-get install -y build-essential libx11-6 libglu1-mesa \
+		libpng12-0 libjpeg62 libusb-0.1-4 libxrandr2 libstdc++5 \
+		alsa xinit x11-xserver-utils libXtst6 libasound2 pmount zip unzip \
+		libusb-0.1-4 xinit;
+fi
+
 }
 
 cab_config(){
