@@ -22,6 +22,7 @@ kernel_module(){
 	echo -e "a newer driver be required.\n";
 	echo -e "Working Examples: GeForce 9400    ${GREEN}(331.49)${NC}";
 	echo -e "                  GeForce GT 630  ${GREEN}(340.64)${NC}\n";
+	echo -e "                  GeForce FX 5200  ${GREEN}(173.14)${NC}\n";
 }
 
 nvidia_choice(){
@@ -44,9 +45,8 @@ nvidia_173_14(){
 	else
 		echo "Downloading NVIDIA Driver";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86/173.14.39/NVIDIA-Linux-x86-173.14.39-pkg1.run" -P /home/itg/;
-		chmod 777 /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
 		chmod +x /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
-                /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
+                ./home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
 	fi
 }
 
@@ -58,7 +58,6 @@ nvidia_331_49(){
 	else
 		echo "Downloading NVIDIA Driver";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/331.49/NVIDIA-Linux-x86_64-331.49.run" -P /home/itg/;	
-                chmod +x /home/itg/NVIDIA-Linux-x86_64-331.49.run
 		/home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
 	fi
 }
@@ -72,7 +71,6 @@ nvidia_340_65(){
 	else
 		echo "Downloading NVIDIA Driver then intalling";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.65/NVIDIA-Linux-x86_64-340.65.run" -P /home/itg/;
-		chmod +x /home/itg/NVIDIA-Linux-x86_64-340.65.run
 		/home/itg/NVIDIA-Linux-x86_64-340.65.run -a -X -q
 	fi
 }
@@ -85,7 +83,6 @@ nvidia_340_96(){
 	else
 		echo "Downloading NVIDIA Driver then installing";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.96/NVIDIA-Linux-x86_64-340.96.run" -P /home/itg/;
-		chmod +x /home/itg/NVIDIA-Linux-x86_64-340.96.run
 		/home/itg/NVIDIA-Linux-x86_64-340.96.run -a -X -q
 	fi
 }
