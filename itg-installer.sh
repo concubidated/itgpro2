@@ -21,7 +21,8 @@ kernel_module(){
 	echo "Likely 331.49 drivers will work best, but with newer cards";
 	echo -e "a newer driver be required.\n";
 	echo -e "Working Examples: GeForce 9400    ${GREEN}(331.49)${NC}";
-	echo -e "                  GeForce GT 630  ${GREEN}(340.64)${NC}\n";
+	echo -e "		   GeForce 210";
+	echo -e "                  GeForce GT 630  ${GREEN}(340.65)${NC}";
 	echo -e "                  GeForce FX 5200  ${GREEN}(173.14)${NC}\n";
 }
 
@@ -33,7 +34,7 @@ nvidia_choice(){
 	  331_49 ) nvidia_331_49 ;;
 	  340_65 ) nvidia_340_65 ;;
 	  340_96 ) nvidia_340_96 ;;
-	  *   ) echo "${RED}Invalid Choice${NC}"; nvidia_choice ;;
+	  *   ) echo -e "${RED}Invalid Choice${NC}"; nvidia_choice ;;
 	esac
 }
 
@@ -44,9 +45,8 @@ nvidia_173_14(){
 		/home/itg/drivers/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
 	else
 		echo "Downloading NVIDIA Driver";
-		wget "http://us.download.nvidia.com/XFree86/Linux-x86/173.14.39/NVIDIA-Linux-x86-173.14.39-pkg1.run" -P /home/itg/;
-		chmod +x /home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run
-                ./home/itg/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86/173.14.39/NVIDIA-Linux-x86-173.14.39-pkg1.run" -P $HOME/;
+        	sh $HOME/NVIDIA-Linux-x86-173.14.39-pkg1.run -a -X -q
 	fi
 }
 
@@ -57,8 +57,8 @@ nvidia_331_49(){
 		/home/itg/drivers/NVIDIA-Linux-x86_64-331.49.run -a -X -q
 	else
 		echo "Downloading NVIDIA Driver";
-		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/331.49/NVIDIA-Linux-x86_64-331.49.run" -P /home/itg/;	
-		/home/itg/NVIDIA-Linux-x86_64-331.49.run -a -X -q
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/331.49/NVIDIA-Linux-x86_64-331.49.run" -P $HOME/;	
+		sh $HOME/NVIDIA-Linux-x86_64-331.49.run -a -X -q
 	fi
 }
 
@@ -70,8 +70,8 @@ nvidia_340_65(){
 		/home/itg/drivers/NVIDIA-Linux-x86_64-340.65.run -a -X -q
 	else
 		echo "Downloading NVIDIA Driver then intalling";
-		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.65/NVIDIA-Linux-x86_64-340.65.run" -P /home/itg/;
-		/home/itg/NVIDIA-Linux-x86_64-340.65.run -a -X -q
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.65/NVIDIA-Linux-x86_64-340.65.run" -P $HOME/;
+		sh $HOME/NVIDIA-Linux-x86_64-340.65.run -a -X -q
 	fi
 }
 
@@ -82,8 +82,8 @@ nvidia_340_96(){
 		/home/itg/drivers/NVIDIA-Linux-x86_64-340.96.run -a -X -q
 	else
 		echo "Downloading NVIDIA Driver then installing";
-		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.96/NVIDIA-Linux-x86_64-340.96.run" -P /home/itg/;
-		/home/itg/NVIDIA-Linux-x86_64-340.96.run -a -X -q
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.96/NVIDIA-Linux-x86_64-340.96.run" -P $HOME/;
+		sh $HOME/NVIDIA-Linux-x86_64-340.96.run -a -X -q
 	fi
 }
 
@@ -116,8 +116,8 @@ upstart_setup(){
 start on runlevel [2345]
 exec /itgdata/start-game.sh
 respawn
-# Give up if restart occurs 10 times in 90 seconds.
-respawn limit 10 90
+# Give up if restart occurs 3 times in 60 seconds.
+respawn limit 3 60
 EOF
 		echo -e "Upstart Script installed.\n" ;
 	fi
