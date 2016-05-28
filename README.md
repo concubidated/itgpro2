@@ -73,7 +73,7 @@ The iso has had a couple issues where it would not work correctly when installin
 
 If this is occuring, the problem is the NVIDIA driver module not loading. This is likely due to either selecting an incompatable driver, or the nouveau driver is loading instead. If nouveau is showing up in the command `lsmod` blacklist the module to prevent it rom being used.
 
-`cat "blacklist nouveau"  | sudo tee -a /etc/modprobe.d/blacklist.conf`
+`echo "blacklist nouveau"  | sudo tee -a /etc/modprobe.d/blacklist.conf`
 
 ##Overscan issues
 
