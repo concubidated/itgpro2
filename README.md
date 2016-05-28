@@ -46,7 +46,7 @@ The iso has had a couple issues where it would not work correctly when installin
 
 ##Installing without the ISO
 
-1. Download [Ubuntu 14.04.1] (http://old-releases.ubuntu.com/releases/14.04.2/ubuntu-14.04.1-server-amd64.iso)
+1. Download [Ubuntu 14.04.1] (http://old-releases.ubuntu.com/releases/14.04.2/ubuntu-14.04.1-server-amd64.iso). If you are running this on the STOCK ITG2 hardware, you will need to use an older Ubuntu Release Download [Ubuntu 12.04.1] (http://old-releases.ubuntu.com/releases/12.04.1/ubuntu-12.04.1-desktop-i386.iso) instead.
 2. Boot the installer, and select "Install Ubuntu Server"
 3. Enter through the options, set the hostname to *itg*, username to *itg*, and password to *itg*, use weak password and do NOT encrypt the home directory.
 4. Partiioning, select *Manual*, Select *sda* drive, create empy partition table. Then create the following partitions.
@@ -60,11 +60,20 @@ The iso has had a couple issues where it would not work correctly when installin
 4. System will install, when it gets to the Software Selection Screen, use spacebar to select OpenSSH server
 5. Install GRUB
 6. After the install is finished, the system should reboot and you will get a login promt. Login with `itg`, and password `itg`.
+  * At this point it is recommended to connect to the ITG machine via SSH. If you are running Linux or OSX, simply open terminal and run `ssh itg@<ip address>` to connect. The machine will need to be connected online to continue the installation of ITG.
 7. Install GIT `sudo apt-get install git`
 8. Clone the repo, `git clone https://github.com/concubidated/itgpro2` and change directory to itgpro2, `cd itgpro2`
 9. Run the installer script `sudo ./itg-installer.sh`
   * When asked what NVIDIA driver to install, start with 331_49 if using a 9000 series card or older.
-10. If everything went well, itg can be started with `sudo start itg`
+  * If you are using the STOCK ITG2 hardware, choose the NVIDIA driver 173_14.
+10. If everything went well, itg can be started with `sudo start itg` to stop itg from running, you can run the command `sudo stop itg`.
+
+
+##When ITG is starting the screen flashes green
+
+If this is occuring, the problem is the NVIDIA driver module not loading. This is likely due to either selecting an incompatable driver, or the nouveau driver is loading instead. If nouveau is showing up in the command `lsmod` blacklist the module to prevent it rom being used.
+
+`cat "blacklist nouveau"  | sudo tee -a /etc/modprobe.d/blacklist.conf`
 
 ##Overscan issues
 
