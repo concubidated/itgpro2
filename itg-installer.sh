@@ -20,10 +20,9 @@ kernel_module(){
 	echo "Please choose which driver you would like to install. Most";
 	echo "Likely 331.49 drivers will work best, but with newer cards";
 	echo -e "a newer driver be required.\n";
-	echo -e "Working Examples: GeForce 9400    ${GREEN}(331.49)${NC}";
-	echo -e "		   GeForce 210";
-	echo -e "                  GeForce GT 630  ${GREEN}(340.65)${NC}";
-	echo -e "                  GeForce FX 5200  ${GREEN}(173.14)${NC}\n";
+	echo -e "Working Examples: GeForce 9400, 210	${GREEN}(331.49)${NC}";
+	echo -e "                  GeForce GT 630	${GREEN}(340.65)${NC}";
+	echo -e "                  GeForce FX 5200	${GREEN}(173.14)${NC}\n";
 }
 
 nvidia_choice(){
@@ -88,6 +87,10 @@ nvidia_340_96(){
 }
 
 stats_setup(){
+	if [ ! -d "/stats" ]; then
+		mkdir /stats
+	fi
+	
 	if [ -f "files/stats.tar" ]
 	then
 	        echo "Extracting data for /stats";
@@ -99,6 +102,10 @@ stats_setup(){
 }
 
 itgdata_setup(){
+	if [ ! -d "/itgdata" ]; then
+		mkdir /itgdata
+	fi
+	
 	if [ -f "files/itgdata.tar" ]
 	then
 		echo "Extracting data for /itgdata"
@@ -179,7 +186,7 @@ install_packages(){
 		apt-get install -y build-essential libx11-6 libglu1-mesa \
 		libpng12-0 libjpeg62 libusb-0.1-4 libxrandr2 libstdc++5 \
 		alsa xinit x11-xserver-utils libXtst6 libasound2 pmount zip unzip \
-		libusb-0.1-4 xinit;
+		libusb-0.1-4 xinit linux-headers-`uname -r`;
 fi
 
 }
