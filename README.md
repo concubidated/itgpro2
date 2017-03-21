@@ -56,7 +56,7 @@ The iso has had a couple issues where it would not work correctly when installin
 1. Download [Ubuntu 14.04.1](http://old-releases.ubuntu.com/releases/14.04.2/ubuntu-14.04.1-server-amd64.iso). If you are running this on the STOCK ITG2 hardware, you will need to use an older Ubuntu Release Download [Ubuntu 12.04.1](http://old-releases.ubuntu.com/releases/12.04.1/ubuntu-12.04.1-server-i386.iso) instead.
 1. Boot the installer, and select `Install Ubuntu Server`
 1. Enter through the options, set the hostname to `itg`, username to `itg`, and password to `itg`, use weak password and do *NOT* encrypt the home directory.
-1. Partiioning, select `Manual`, Select `sda` drive, create empy partition table. Then create the following partitions.
+1. Partitioning, select `Manual`, Select `sda` drive, create empy partition table. Then create the following partitions.
     * 500MB, Primary, XFS, Mount = /boot, bootable flag = yes, Done
     * 5GB, Primary, XFS, Mount = /, Done
     * 1GB, Primary, XFS, Mount = /stats, Done
