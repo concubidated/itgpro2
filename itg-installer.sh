@@ -22,7 +22,7 @@ kernel_module(){
 	echo -e "a newer driver be required.\n";
 	echo -e "Working Examples: GeForce 9400, 210	${GREEN}(331.49)${NC}";
 	echo -e "                  GeForce GT 630	${GREEN}(340.65)${NC}";
-	echo -e "                  GeForce GT 1060	${GREEN}(384.90)${NC}";
+	echo -e "                  GeForce GTX 1060	${GREEN}(384.90)${NC}";
 	echo -e "                  GeForce FX 5200	${GREEN}(173.14)${NC}\n";
 }
 
