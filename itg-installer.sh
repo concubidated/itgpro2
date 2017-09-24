@@ -22,17 +22,19 @@ kernel_module(){
 	echo -e "a newer driver be required.\n";
 	echo -e "Working Examples: GeForce 9400, 210	${GREEN}(331.49)${NC}";
 	echo -e "                  GeForce GT 630	${GREEN}(340.65)${NC}";
+	echo -e "                  GeForce GT 1060	${GREEN}(384.90)${NC}";
 	echo -e "                  GeForce FX 5200	${GREEN}(173.14)${NC}\n";
 }
 
 nvidia_choice(){
-	read -p "Which Nvidia driver would you like to install (173_14/331_49/340_65/340_96)? " choice
+	read -p "Which Nvidia driver would you like to install (173_14/331_49/340_65/340_96/384_90)? " choice
 
 	case "$choice" in
 	  173_14 ) nvidia_173_14 ;;	
 	  331_49 ) nvidia_331_49 ;;
 	  340_65 ) nvidia_340_65 ;;
 	  340_96 ) nvidia_340_96 ;;
+	  384_90 ) nvidia_384_90 ;;
 	  *   ) echo -e "${RED}Invalid Choice${NC}"; nvidia_choice ;;
 	esac
 }
@@ -83,6 +85,18 @@ nvidia_340_96(){
 		echo "Downloading NVIDIA Driver then installing";
 		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/340.96/NVIDIA-Linux-x86_64-340.96.run" -P $HOME/;
 		sh $HOME/NVIDIA-Linux-x86_64-340.96.run -a -X -q
+	fi
+}
+
+nvidia_384_90(){
+	if [ -f "/home/itg/drivers/NVIDIA-Linux-x86_64-384.90.run" ]
+	then
+		echo "Installing NVIDIA-Linux-x86_64-384.90.run";
+		/home/itg/drivers/NVIDIA-Linux-x86_64-384.90.run -a -X -q
+	else
+		echo "Downloading NVIDIA Driver then installing";
+		wget "http://us.download.nvidia.com/XFree86/Linux-x86_64/384.90/NVIDIA-Linux-x86_64-384.90.run" -P $HOME/;
+		sh $HOME/NVIDIA-Linux-x86_64-384.90.run -a -X -q
 	fi
 }
 
